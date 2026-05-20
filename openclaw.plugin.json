@@ -1,0 +1,42 @@
+{
+  "id": "astra-zerotrust",
+  "name": "Astra Zero Trust",
+  "version": "1.0.0",
+  "description": "Zero Trust AI data protection. Real data never reaches the LLM. Every message tokenized. Vault wiped at session end.",
+  "author": "Codeastra <hello@codeastra.dev>",
+  "homepage": "https://codeastra.dev",
+  "keywords": ["security", "privacy", "hipaa", "zerotrust", "pii", "tokenization"],
+  "license": "MIT",
+  "entry": "./index.ts",
+  "configSchema": {
+    "type": "object",
+    "properties": {
+      "apiKey": {
+        "type": "string",
+        "description": "Your Codeastra API key. Get it at app.codeastra.dev",
+        "envFallback": "ASTRA_API_KEY"
+      },
+      "failClosed": {
+        "type": "boolean",
+        "description": "Block all requests if Astra is unreachable. Recommended true for healthcare/finance.",
+        "default": true
+      },
+      "astraUrl": {
+        "type": "string",
+        "description": "Astra backend URL. Default: https://app.codeastra.dev",
+        "default": "https://app.codeastra.dev"
+      }
+    },
+    "required": ["apiKey"]
+  },
+  "hooks": [
+    "agent:turn:start",
+    "tool_result_persist",
+    "command:new"
+  ],
+  "openclaw": {
+    "minVersion": "2026.1.0",
+    "category": "security",
+    "tags": ["security", "privacy", "hipaa", "compliance"]
+  }
+}
